@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
 
     private bool m_bJumping;
 
-    void Awake ()
+    void Awake()
     {
         m_fSpeed = 0.1f;
         m_fJumpHeight = 2.3f;
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         m_Sprite = GetComponent<SpriteRenderer>();
     }
 
-    void Update ()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !m_bJumping)
         {
@@ -104,19 +104,4 @@ public class Player : MonoBehaviour
 
         }
 	}
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.collider.name == "Bounds_Left")
-    //    {
-    //        // Turn around
-    //        m_Behaviour = Behaviour.Travel_Right;
-    //    }
-    //
-    //    if (collision.collider.name == "Bounds_Right")
-    //    {
-    //        // Turn around
-    //        m_Behaviour = Behaviour.Travel_Left;
-    //    }
-    //}
 }
