@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player m_Player;
+
     public enum Behaviour
     {
+        Spawn,
         Travel_Left,
         Travel_Right,
         Ascend,
         Descend
     }
 
-    private Behaviour m_eBehaviour = Behaviour.Travel_Left;
-    private Behaviour m_eTravelDir = Behaviour.Travel_Left;
+    private Behaviour m_eBehaviour;
+    private Behaviour m_eTravelDir;
 
     public GameObject m_LeftBounds; public GameObject m_RightBounds;
 
@@ -23,14 +26,29 @@ public class Player : MonoBehaviour
     private float m_fJumpHeight;
     private float m_fSwimDepth;
 
+    public int m_iScore;
+
     private bool m_bJumping;
 
     void Awake()
     {
+        if (m_Player == null)
+        {
+            m_Player = this;
+        }
+        else if (m_Player != this)
+        {
+            Destroy(gameObject);
+        }
+
         m_fSpeed = 0.1f;
         m_fJumpHeight = 2.3f;
         m_fSwimDepth = -1.8f;
+        m_iScore = 0;
         m_bJumping = false;
+
+        m_eBehaviour = Behaviour.Spawn;
+        
         m_Sprite = GetComponent<SpriteRenderer>();
     }
 
@@ -49,8 +67,30 @@ public class Player : MonoBehaviour
 
         switch (m_eBehaviour)
         {
+            case Behaviour.Spawn:
+                {
+                    transform.position = new Vector2(0.0f, -1.85f);
+
+                    int spawnPos = Random.Range(0, 2);
+
+                    if (spawnPos == 0)
+                    {
+                        m_eBehaviour = Behaviour.Travel_Right;
+                    }
+                    else if (spawnPos == 1)
+                    {
+                        m_eBehaviour = Behaviour.Travel_Left;
+                    }
+                    else
+                    {
+                        Debug.Log("Error randomising spawn location, spawnPos = " + spawnPos);
+                    }
+
+                    break;
+                }
             case Behaviour.Travel_Left:
                 {
+                    m_eTravelDir = m_eBehaviour;
                     m_Sprite.flipX = false;
                     transform.Translate(-m_fSpeed, 0, 0);
 
@@ -63,6 +103,7 @@ public class Player : MonoBehaviour
                 }
             case Behaviour.Travel_Right:
                 {
+                    m_eTravelDir = m_eBehaviour;
                     m_Sprite.flipX = true;
                     transform.Translate(m_fSpeed, 0, 0);
 
@@ -101,7 +142,6 @@ public class Player : MonoBehaviour
                     Debug.Log("Behaviour not recognised");
                     break;
                 }
-
         }
 	}
 }
