@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager m_GameManager;
+    public GameObject m_PlayButton;
+    public GameObject m_PauseButton;
+    public GameObject m_HomeButton;
+    public GameObject m_ResumeButton;
 
-    protected bool m_bEndGame;
-    protected bool m_bPauseGame;
+    public bool m_bEndGame;
+    public bool m_bPauseGame;
 
 	void Awake()
     {
         m_bEndGame = false;
-        m_bPauseGame = false;
+        m_bPauseGame = true;
+
+        m_PauseButton.SetActive(false);
+        m_HomeButton.SetActive(false);
+        m_ResumeButton.SetActive(false);
 
         if (m_GameManager == null)
         {
@@ -40,7 +49,30 @@ public class GameManager : MonoBehaviour
         {
             // Game over
             Debug.Log("Game Over");
-            Time.timeScale = 0; // Temp result
+            
         }
 	}
+
+    public void GameStart()
+    {
+        m_PlayButton.SetActive(false);
+        m_PauseButton.SetActive(true);
+        m_HomeButton.SetActive(false);
+        m_ResumeButton.SetActive(false);
+
+        m_bPauseGame = false;
+    }
+
+    public void GamePause()
+    {
+        m_bPauseGame = true;
+        m_HomeButton.SetActive(true);
+        m_ResumeButton.SetActive(true);
+        m_PauseButton.SetActive(false);
+    }
+
+     public void ReturnToHome()
+    {
+        Application.LoadLevel("Menu");
+    }
 }

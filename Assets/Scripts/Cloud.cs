@@ -15,6 +15,11 @@ public class Cloud : MonoBehaviour
 	
 	void Update()
     {
+        if (GameManager.m_GameManager.m_bPauseGame)
+        {
+            return;
+        }
+
         transform.Translate(m_fSpeed, 0, 0);
 
         if (transform.position.x > m_RightBounds.transform.position.x)

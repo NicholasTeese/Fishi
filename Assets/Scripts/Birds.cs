@@ -30,6 +30,11 @@ public class Birds : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.m_GameManager.m_bPauseGame)
+        {
+            return;
+        }
+
         switch (m_eBehaviour)
         {
             case Behaviour.Spawn:

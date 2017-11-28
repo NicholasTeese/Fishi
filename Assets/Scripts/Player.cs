@@ -54,7 +54,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !m_bJumping)
+        if (GameManager.m_GameManager.m_bPauseGame)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) && !m_bJumping)
         {
             if (m_eTravelDir != m_eBehaviour)
             {
