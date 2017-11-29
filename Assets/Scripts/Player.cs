@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private Behaviour m_eTravelDir;
 
     public GameObject m_LeftBounds; public GameObject m_RightBounds;
-
+    
     private SpriteRenderer m_Sprite;
 
     private float m_fSpeed;
@@ -95,6 +95,8 @@ public class Player : MonoBehaviour
                 }
             case Behaviour.Travel_Left:
                 {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+
                     m_eTravelDir = m_eBehaviour;
                     m_Sprite.flipX = false;
                     transform.Translate(-m_fSpeed, 0, 0);
@@ -108,6 +110,8 @@ public class Player : MonoBehaviour
                 }
             case Behaviour.Travel_Right:
                 {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+
                     m_eTravelDir = m_eBehaviour;
                     m_Sprite.flipX = true;
                     transform.Translate(m_fSpeed, 0, 0);
@@ -121,7 +125,24 @@ public class Player : MonoBehaviour
                 }
             case Behaviour.Ascend:
                 {
-                    transform.Translate(0, m_fSpeed, 0);
+                    Quaternion ascentRotation = new Quaternion(0, 0, 0, 0);
+
+                    if (m_eTravelDir == Behaviour.Travel_Left)
+                    {
+                        ascentRotation = new Quaternion(0.0f, 0.0f, -0.7f, 0.7f);
+                        transform.rotation = ascentRotation;
+                        transform.Translate(-m_fSpeed, 0, 0);
+                    }
+                    else if(m_eTravelDir == Behaviour.Travel_Right)
+                    {
+                        ascentRotation = new Quaternion(0.0f, 0.0f, 0.7f, 0.7f);
+                        transform.rotation = ascentRotation;
+                        transform.Translate(m_fSpeed, 0, 0);
+                    }
+                    else
+                    {
+                        Debug.Log("Travel Direction Invalid");
+                    }
 
                     if (transform.position.y > m_fJumpHeight)
                     {
@@ -132,7 +153,24 @@ public class Player : MonoBehaviour
                 }
             case Behaviour.Descend:
                 {
-                    transform.Translate(0, -m_fSpeed, 0);                    
+                    Quaternion descentRotation = new Quaternion(0, 0, 0, 0);
+
+                    if (m_eTravelDir == Behaviour.Travel_Left)
+                    {
+                        descentRotation = new Quaternion(0.0f, 0.0f, 0.7f, 0.7f);
+                        transform.rotation = descentRotation;
+                        transform.Translate(-m_fSpeed, 0, 0);
+                    }
+                    else if (m_eTravelDir == Behaviour.Travel_Right)
+                    {
+                        descentRotation = new Quaternion(0.0f, 0.0f, -0.7f, 0.7f);
+                        transform.rotation = descentRotation;
+                        transform.Translate(m_fSpeed, 0, 0);
+                    }
+                    else
+                    {
+                        Debug.Log("Travel Direction Invalid");
+                    }                 
 
                     if (transform.position.y < m_fSwimDepth)
                     {
