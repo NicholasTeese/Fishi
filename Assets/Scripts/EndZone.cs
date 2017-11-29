@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EndZone : GameManager
+public class EndZone : MonoBehaviour
 {
     protected bool m_bTerminate = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        base.m_bEndGame = true;
+        GameManager.m_GameManager.m_bEndGame = true;
     }
 }
