@@ -91,12 +91,15 @@ public class Insect : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             m_eBehaviour = Behaviour.Perish;
-            // Debug.Log("Nom");
         }
         if (collision.gameObject.CompareTag("Boundary"))
         {
+            if (GameManager.m_GameManager.m_bEndGame)
+            {
+                this.gameObject.SetActive(false);
+            }
+
             m_eBehaviour = Behaviour.Spawn;
-            // Debug.Log("Nom");
         }
     }
 }

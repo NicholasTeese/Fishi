@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager m_GameManager;
+
+    public GameObject m_EndScreen;
+
     public GameObject m_PlayButton;
     public GameObject m_PauseButton;
     public GameObject m_HomeButton;
@@ -18,6 +22,8 @@ public class GameManager : MonoBehaviour
         m_bEndGame = false;
         m_bPauseGame = true;
 
+        m_EndScreen.SetActive(false);
+
         m_PauseButton.SetActive(false);
         m_HomeButton.SetActive(false);
         m_ResumeButton.SetActive(false);
@@ -30,6 +36,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (!PlayerPrefs.HasKey("Highscore"))
+        {
+            PlayerPrefs.SetInt("Highscore", 0);
+        }
     }
 	
 	void Update()
@@ -37,20 +48,19 @@ public class GameManager : MonoBehaviour
         if (m_bPauseGame == false && m_bEndGame == false)
         {
             // Game is running
-        }
-
-        if (m_bPauseGame)
-        {
-            // Game is paused
+            if(m_EndScreen.activeSelf)
+            {
+                m_EndScreen.SetActive(false);
+            }
         }
 
         if (m_bEndGame)
         {
             // Game over
-            Debug.Log("Game Over");
-            
+            SaveScore();
+            m_EndScreen.SetActive(true);
         }
-	}
+    }
 
     public void GameStart()
     {
@@ -72,6 +82,21 @@ public class GameManager : MonoBehaviour
 
      public void ReturnToHome()
     {
-        Application.LoadLevel("Menu");
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void Reset()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    void SaveScore()
+    {
+        int oldScore = PlayerPrefs.GetInt("Highscore");
+
+        if (oldScore < Player.m_Player.m_iScore)
+        {
+            PlayerPrefs.SetInt("Highscore", Player.m_Player.m_iScore);
+        }
     }
 }

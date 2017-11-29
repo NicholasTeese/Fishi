@@ -30,7 +30,7 @@ public class Birds : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.m_GameManager.m_bPauseGame)
+        if (GameManager.m_GameManager.m_bPauseGame || GameManager.m_GameManager.m_bEndGame)
         {
             return;
         }
@@ -92,12 +92,6 @@ public class Birds : MonoBehaviour
                     {
                         Debug.Log("Travel direction not found, previous behaviour == " + m_eBehaviour);
                     }
-
-                    //if (transform.position.y > 6)
-                    //{
-                    //    Time.timeScale = 0; // temp result
-                    //    Debug.Log("Game Over, please restart.");
-                    //}
                     break;
                 }
             default:

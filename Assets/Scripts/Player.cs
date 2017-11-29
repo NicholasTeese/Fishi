@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.m_GameManager.m_bPauseGame)
+        if (GameManager.m_GameManager.m_bPauseGame || GameManager.m_GameManager.m_bEndGame)
         {
             return;
         }

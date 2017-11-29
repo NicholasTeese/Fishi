@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class EndZone : MonoBehaviour
 {
-    protected bool m_bTerminate = false;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.m_GameManager.m_bEndGame = true;

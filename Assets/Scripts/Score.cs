@@ -16,13 +16,24 @@ public class Score : MonoBehaviour
         m_textDisplay = GetComponent<Text>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         m_iScore = Player.m_Player.m_iScore;
 
         if (m_textDisplay != null)
         {
-            m_textDisplay.text = "Score: " + m_iScore;
+            if (m_textDisplay.CompareTag("PlayerScore"))
+            {
+                m_textDisplay.text = "Score: " + m_iScore;
+            }
+            else if (m_textDisplay.CompareTag("Highscore"))
+            {
+                m_textDisplay.text = "Highscore: " + PlayerPrefs.GetInt("Highscore");
+            }
+            else
+            {
+                Debug.Log("Invalid Scoring Tag");
+            }
         }
         else
         {

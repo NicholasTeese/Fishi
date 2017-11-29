@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Insect
   - Boundary
+  - PlayerScore
+  - Highscore
   layers:
   - Default
   - TransparentFX
