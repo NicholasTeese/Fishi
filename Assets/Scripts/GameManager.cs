@@ -17,7 +17,11 @@ public class GameManager : MonoBehaviour
     public bool m_bEndGame;
     public bool m_bPauseGame;
 
-	void Awake()
+    public List<GameObject> InsectList = new List<GameObject>();
+    public List<GameObject> BirdList = new List<GameObject>();
+
+
+    void Awake()
     {
         m_bEndGame = false;
         m_bPauseGame = true;
@@ -42,8 +46,16 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Highscore", 0);
         }
     }
-	
-	void Update()
+
+    private void Start()
+    {
+        InsectList[1].SetActive(false);
+        InsectList[2].SetActive(false);
+        BirdList[1].SetActive(false);
+        BirdList[2].SetActive(false);
+    }
+
+    void FixedUpdate()
     {
         if (m_bPauseGame == false && m_bEndGame == false)
         {
@@ -59,6 +71,26 @@ public class GameManager : MonoBehaviour
             // Game over
             SaveScore();
             m_EndScreen.SetActive(true);
+        }
+
+        if(Player.m_Player.m_iScore == 200)
+        {
+            InsectList[1].SetActive(true);
+        }
+
+        if(Player.m_Player.m_iScore > 699)
+        {
+            InsectList[2].SetActive(true);
+        }
+
+        if (Player.m_Player.m_iScore > 299)
+        {
+            BirdList[1].SetActive(true);
+        }
+
+        if(Player.m_Player.m_iScore > 599)
+        {
+            BirdList[2].SetActive(true);
         }
     }
 

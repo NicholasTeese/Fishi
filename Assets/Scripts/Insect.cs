@@ -12,18 +12,58 @@ public class Insect : MonoBehaviour
         Perish
     }
 
+    public enum InsectType
+    {
+        Butterfly,
+        Dragonfly,
+        Cicada
+    }
+
     private Behaviour m_eBehaviour = Behaviour.Spawn;
+    private InsectType m_eInsectType;
 
     public GameObject m_LeftBounds; public GameObject m_RightBounds;
 
     private SpriteRenderer m_Sprite;
 
     private float m_fSpeed;
+    private int m_iScore;
 
     void Awake()
     {
-        m_fSpeed = 0.1f;
+        m_fSpeed = 0;
         m_Sprite = GetComponent<SpriteRenderer>();
+
+        if (gameObject.name == "Butterfly") { m_eInsectType = InsectType.Butterfly; }
+        else if (gameObject.name == "Dragonfly") { m_eInsectType = InsectType.Dragonfly; }
+        else if (gameObject.name == "Cicada") { m_eInsectType = InsectType.Cicada; }
+    }
+
+    private void Start()
+    {
+        switch(m_eInsectType)
+        {
+            case InsectType.Butterfly:
+                {
+                    m_iScore = 50;
+                    break;
+                }
+            case InsectType.Dragonfly:
+                {
+                    m_iScore = 100;
+                    break;
+                }
+            case InsectType.Cicada:
+                {
+                    m_iScore = 150;
+                    break;
+                }
+            default:
+                {
+                    Debug.Log("Insect Type not found");
+                    break;
+                }
+        }
     }
 
     void Update()
@@ -38,7 +78,18 @@ public class Insect : MonoBehaviour
             case Behaviour.Spawn:
                 {
                     int spawnPos = Random.Range(0, 2);
-                    m_fSpeed = Random.Range(0.07f, 0.12f);
+                    if (m_eInsectType == InsectType.Butterfly)
+                    {
+                        m_fSpeed = Random.Range(0.07f, 0.12f);
+                    }
+                    if (m_eInsectType == InsectType.Dragonfly)
+                    {
+                        m_fSpeed = Random.Range(0.1f, 0.15f);
+                    }
+                    if (m_eInsectType == InsectType.Cicada)
+                    {
+                        m_fSpeed = Random.Range(0.13f, 0.18f);
+                    }
 
                     if (spawnPos == 0)
                     {
@@ -72,7 +123,7 @@ public class Insect : MonoBehaviour
                 }
             case Behaviour.Perish:
                 {
-                    Player.m_Player.m_iScore += 50;
+                    Player.m_Player.m_iScore += m_iScore;
                     Debug.Log(Player.m_Player.m_iScore);
                     m_eBehaviour = Behaviour.Spawn;
 
