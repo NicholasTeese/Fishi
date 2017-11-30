@@ -77,7 +77,6 @@ public class Insect : MonoBehaviour
         {
             case Behaviour.Spawn:
                 {
-                    int spawnPos = Random.Range(0, 2);
                     if (m_eInsectType == InsectType.Butterfly)
                     {
                         m_fSpeed = Random.Range(0.07f, 0.12f);
@@ -91,6 +90,7 @@ public class Insect : MonoBehaviour
                         m_fSpeed = Random.Range(0.13f, 0.18f);
                     }
 
+                    int spawnPos = Random.Range(0, 2);
                     if (spawnPos == 0)
                     {
                         transform.position = new Vector2(-11, Random.Range(0.0f, 2.0f));

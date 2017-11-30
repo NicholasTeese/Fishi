@@ -30,7 +30,7 @@ public class Birds : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.m_GameManager.m_bPauseGame || GameManager.m_GameManager.m_bEndGame)
+        if (GameManager.m_GameManager.m_bPauseGame)
         {
             return;
         }
@@ -118,7 +118,14 @@ public class Birds : MonoBehaviour
             }
             else
             {
-                m_eBehaviour = Behaviour.Spawn;
+                if (GameManager.m_GameManager.m_bEndGame)
+                {
+                    this.gameObject.SetActive(false);
+                }
+                else
+                {
+                    m_eBehaviour = Behaviour.Spawn;
+                }
             }
         }
     }
