@@ -21,18 +21,45 @@ public class Birds : MonoBehaviour
     private SpriteRenderer m_Sprite;
 
     private float m_fSpeed;
+    private float m_fRangeUpper; private float m_fRangeLower;
+
+    private bool m_bCleared;
 
     void Awake()
     {
+        m_bCleared = false;
         m_fSpeed = 0.1f;
         m_Sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
+
+        m_fRangeLower = transform.position.x - 0.3f;
+        m_fRangeUpper = transform.position.x + 0.3f;
+
         if (GameManager.m_GameManager.m_bPauseGame)
         {
             return;
+        }
+
+        if (Player.m_Player.m_bJumping)
+        {
+            if (Player.m_Player.transform.position.y > transform.position.y + 0.5f)
+            {
+                if (Player.m_Player.transform.position.x > m_fRangeLower && Player.m_Player.transform.position.x < m_fRangeUpper)
+                {
+                    if(!m_bCleared)
+                    {
+                        Player.m_Player.m_iScore += 150;
+                        m_bCleared = true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            m_bCleared = false;
         }
 
         switch (m_eBehaviour)
@@ -44,12 +71,12 @@ public class Birds : MonoBehaviour
 
                     if (spawnPos == 0)
                     {
-                        transform.position = new Vector2(-11, Random.Range(0.0f, 2.0f));
+                        transform.position = new Vector2(-10.5f, Random.Range(0.0f, 2.0f));
                         m_eBehaviour = Behaviour.Fly_Right;
                     }
                     else if (spawnPos == 1)
                     {
-                        transform.position = new Vector2(11, Random.Range(0.0f, 2.0f));
+                        transform.position = new Vector2(10.5f, Random.Range(0.0f, 2.0f));
                         m_eBehaviour = Behaviour.Fly_Left;
                     }
                     else

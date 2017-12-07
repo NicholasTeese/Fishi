@@ -93,12 +93,12 @@ public class Insect : MonoBehaviour
                     int spawnPos = Random.Range(0, 2);
                     if (spawnPos == 0)
                     {
-                        transform.position = new Vector2(-11, Random.Range(0.0f, 2.0f));
+                        transform.position = new Vector2(-10, Random.Range(0.0f, 2.0f));
                         m_eBehaviour = Behaviour.Travel_Right;
                     }
                     else if (spawnPos == 1)
                     {
-                        transform.position = new Vector2(11, Random.Range(0.0f, 2.0f));
+                        transform.position = new Vector2(10, Random.Range(0.0f, 2.0f));
                         m_eBehaviour = Behaviour.Travel_Left;
                     }
                     else
@@ -124,7 +124,7 @@ public class Insect : MonoBehaviour
             case Behaviour.Perish:
                 {
                     Player.m_Player.m_iScore += m_iScore;
-                    Debug.Log(Player.m_Player.m_iScore);
+                    //Debug.Log(Player.m_Player.m_iScore);
                     m_eBehaviour = Behaviour.Spawn;
 
                     break;
@@ -136,7 +136,7 @@ public class Insect : MonoBehaviour
                 }
         }
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))

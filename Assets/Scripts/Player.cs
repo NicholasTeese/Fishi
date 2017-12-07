@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
 
     public int m_iScore;
 
-    private bool m_bJumping;
+    public bool m_bJumping;
 
     void Awake()
     {
